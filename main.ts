@@ -56,11 +56,16 @@ await mkdir(outputDirectory, { recursive: true });
 await copyFile(sourcePath, outputPath);
 
 const output = await readFile(outputPath);
+if (output.length > 1048576) {
+  throw new Error(
+    `Output exceeds the 1 MiB gate limit (1048576 bytes): ${output.length} bytes.`,
+  );
+}
 const { width, height } = jpegDimensions(output);
 if (width !== 1024 || height !== 1024) {
   throw new Error(`Expected a 1024x1024 JPEG output; found ${width}x${height}.`);
 }
 
 console.log(
-  `Copied entry.png to ${outputPath}; validated JPEG dimensions: ${width}x${height} (${output.length} bytes).`,
+  `Copied entry.png to ${outputPath}; validated JPEG dimensions: ${width}x${height}; output size: ${output.length} bytes (within the 1 MiB gate).`,
 );

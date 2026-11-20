@@ -51,7 +51,7 @@ npm start
 MAKEFUN_OUTPUT_DIR=/tmp/world-news-output node main.ts
 ```
 
-`main.ts` resolves `entry.png` relative to its own location using `fileURLToPath(import.meta.url)`, copies it byte-for-byte to `${MAKEFUN_OUTPUT_DIR}/entry.png` (default `/output/entry.png`), and validates the copied JPEG's dimensions as exactly **1024×1024** before printing a success message. It makes no network calls and also works when invoked by absolute script path from another working directory.
+`main.ts` resolves `entry.png` relative to its own location using `fileURLToPath(import.meta.url)`, copies it byte-for-byte to `${MAKEFUN_OUTPUT_DIR}/entry.png` (default `/output/entry.png`), and validates the copied JPEG's dimensions as exactly **1024×1024** and its size as **at most 1 MiB (1,048,576 bytes, the competition gate limit)** before printing a success message. It makes no network calls and also works when invoked by absolute script path from another working directory.
 
 The supplied `entry.png` contains JPEG data despite its filename: **466,491 bytes**, **1024×1024**. Its SHA-256 is:
 
